@@ -96,7 +96,7 @@ def get_google_snippets(query):
 
     # Prepare headers
     headers = {
-      'X-API-KEY': 'fadd013628a5590badbf730932a26dee3778c2fd',
+      'X-API-KEY': os.getenv('X-API-KEY'),
       'Content-Type': 'application/json'
     }
 
