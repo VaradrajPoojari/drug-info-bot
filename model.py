@@ -32,10 +32,12 @@ docsearch = Pinecone.from_existing_index(index_name, embeddings)
 
 def get_similar_docs(query, k=1, score=False):
     """
+    Retrieves similar documents based on the input query.
+
     Args:
         query (str): The input query string for which similar documents are to be retrieved.
-        k (int, optional): The number of similar documents to be returned. Defaults to 3.
-        score (bool, optional): If True, returns similarity scores along with documents. Defaults to False.
+        k (int, optional): The number of similar documents to be returned. Defaults to 1.
+        score (bool, optional): Whether to include scores for the similarity. Defaults to False.
 
     Returns:
         list or dict: A list of similar documents' IDs (and scores if score=True) based on the query.
@@ -46,7 +48,15 @@ def get_similar_docs(query, k=1, score=False):
     return similar_docs
 
 def content_filter(text):
-    """Receives a text and extract a list of labels from it using Open AI"""
+    """
+    Receives a text and extracts a list of labels from it using OpenAI.
+
+    Args:
+        text (str): The input text from which labels are to be extracted.
+
+    Returns:
+        list: A list of labels extracted from the input text.
+    """
     in_progress = True
     counter = 0
     labels = []
@@ -86,6 +96,15 @@ def content_filter(text):
     return labels
 
 def get_google_snippets(query):
+    """
+    Retrieves snippets from Google search results for the given query.
+
+    Args:
+        query (str): The search query for which snippets are to be retrieved.
+
+    Returns:
+        tuple: A tuple containing a list of snippets and a list of sources (links).
+    """
     # Establish connection to the Google SERPer API
     conn = http.client.HTTPSConnection("google.serper.dev")
 
@@ -118,6 +137,15 @@ def get_google_snippets(query):
     return snippets,sources[:5]
 
 def check_wikipedia_search(query):
+    """
+    Checks if there is a relevant Wikipedia search result for the given query.
+
+    Args:
+        query (str): The search query to be checked against Wikipedia.
+
+    Returns:
+        str or bool: The Wikipedia search result if found, or False if not found.
+    """
     wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
     result = wikipedia.run(query)
     if result == "No good Wikipedia Search Result was found":
@@ -129,6 +157,16 @@ def generate_response(
     inquiry_message,
     context,
 ):
+    """
+    Generates a response based on the given inquiry message and context.
+
+    Args:
+        inquiry_message (str): The inquiry message or prompt.
+        context (list): A list of context items to provide additional information.
+
+    Returns:
+        str: The generated response based on the inquiry message and context.
+    """
     prompt = generation_prompt.format(
         context=context,
         inquiry_message=inquiry_message,
@@ -171,6 +209,15 @@ def generate_response(
 
 
 def final_function(text):
+    """
+    Performs a series of operations based on the input text and returns a final result.
+
+    Args:
+        text (str): The input text to be processed.
+
+    Returns:
+        str: The final result based on the processing of the input text.
+    """
     classification = content_filter(text)
     context = []
     
