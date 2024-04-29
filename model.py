@@ -250,12 +250,12 @@ def final_function(text):
         result += sources
 
     elif "HARMFUL_CONTENT" in classification:
-        result = "This query has been flagged as potentially harmful"
+        result = "I appreciate your inquiry, but I must respectfully decline to engage in discussions or activities that could potentially be harmful. If you have any other questions or topics related to drug or medicine you'd like to discuss, I'm more than happy to assist you with those."
 
     elif "OTHER" in classification:
-        result = "This query is out of my scope."
+        result = "I'm sorry, but that falls outside of my scope of expertise. However, if you have any questions related to drugs or medicines, I'm here to assist you."
 
     else:
-        result = "This query is out of my scope."
+        result = "I'm sorry, but that falls outside of my scope of expertise. However, if you have any questions related to drugs or medicines, I'm here to assist you."
     
     return result
